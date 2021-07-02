@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--
+    you can define imports, variables and includes in the <data> tags
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+-->
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.example.databindingex.view.View" alias="MyView"/>
+        <import type="com.example.databindingex.model.User"/>
+        <import type="java.util.List"/>
+        <import type="com.example.databindingex.utils.MyUtilsClass"/>
+
+         <variable
+            name="user"
+            type="User" />
+
+<!-- list of users variable       -->
+        <variable
+            name="userList"
+            type="List&lt;User" />
+
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
+
+
+        <!-- visibility logic for textview  using databinding   -->
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{MyUtilsClass.changeText(user.firstName)}"
+            android:visibility="@{user.loggedIn ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="433dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
